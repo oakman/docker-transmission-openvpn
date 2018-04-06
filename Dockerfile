@@ -12,7 +12,7 @@ RUN apt-get update \
     && wget -O - https://swupdate.openvpn.net/repos/repo-public.gpg | apt-key add - \
     && echo "deb http://build.openvpn.net/debian/openvpn/stable xenial main" > /etc/apt/sources.list.d/openvpn-aptrepo.list \
     && apt-get update \
-    && apt-get install -y openssh-server sudo transmission-cli transmission-common transmission-daemon curl rar unrar zip unzip ufw iputils-ping openvpn \
+    && apt-get install -y sudo transmission-cli transmission-common transmission-daemon curl rar unrar zip unzip ufw iputils-ping openvpn \
     python2.7 python2.7-pysqlite2 && ln -sf /usr/bin/python2.7 /usr/bin/python2 \
     && wget https://github.com/Secretmapper/combustion/archive/release.zip \
     && unzip release.zip -d /opt/transmission-ui/ \
@@ -25,14 +25,17 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && groupmod -g 1000 users \
     && useradd -u 911 -U -d /config -s /bin/false abc \
-    && usermod -G users abc \
-    && mkdir -p /var/run/sshd \
-    && mkdir /config/.ssh \
-    && chmod 700 /config/.ssh \
-    && touch /config/.ssh/authorized_keys
+    && usermod -G users abc
+
+RUN apt-get update && \
+    apt-get -y upgrade && \
+    apt-get -y install openssh-server nano firefox && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    mkdir -p /var/run/sshd
 
 ADD openvpn/ /etc/openvpn/
 ADD transmission/ /etc/transmission/
+ADD sshd_config /etc/ssh
 
 ENV OPENVPN_USERNAME=**None** \
     OPENVPN_PASSWORD=**None** \

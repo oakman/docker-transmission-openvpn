@@ -93,8 +93,11 @@ if [ -n "${LOCAL_NETWORK-}" ]; then
   fi
 fi
 
-# start the SSHD server
-exec /usr/sbin/sshd -D
+# start the SSHD server and add the directories needed
+/usr/sbin/sshd
+mkdir -p /root/.ssh
+chmod 700 /root/.ssh
+touch /root/.ssh/authorized_keys
 
 # start the rest
 exec openvpn $TRANSMISSION_CONTROL_OPTS $OPENVPN_OPTS --config "$OPENVPN_CONFIG"
