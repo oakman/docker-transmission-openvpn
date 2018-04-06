@@ -8,7 +8,7 @@ VOLUME /config
 RUN apt-get update \
     && apt-get -y upgrade \
     && apt-get -y install software-properties-common wget git \
-#    && add-apt-repository ppa:transmissionbt/ppa \
+    && add-apt-repository ppa:transmissionbt/ppa \
     && wget -O - https://swupdate.openvpn.net/repos/repo-public.gpg | apt-key add - \
     && echo "deb http://build.openvpn.net/debian/openvpn/stable xenial main" > /etc/apt/sources.list.d/openvpn-aptrepo.list \
     && apt-get update \
@@ -27,9 +27,11 @@ RUN apt-get update \
     && useradd -u 911 -U -d /config -s /bin/false abc \
     && usermod -G users abc
 
-RUN apt-get update && \
+RUN wget -O - http://deb.opera.com/archive.key | sudo apt-key add - && \
+    sh -c 'echo "deb http://deb.opera.com/opera-stable/ stable non-free" >> /etc/apt/sources.list.d/opera.list' && \
+    apt-get update && \
     apt-get -y upgrade && \
-    apt-get -y install openssh-server nano firefox && \
+    apt-get -y install openssh-server nano opera && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     mkdir -p /var/run/sshd
 
