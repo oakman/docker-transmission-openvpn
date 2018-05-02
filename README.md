@@ -1,4 +1,6 @@
 # Transmission with WebUI and OpenVPN
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foakman%2Fdocker-transmission-openvpn.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Foakman%2Fdocker-transmission-openvpn?ref=badge_shield)
+
 Docker container running Transmission torrent client with WebUI while connecting to OpenVPN.
 It bundles certificates and configurations for a bunch of VPN providers and if you're using PIA as provider it will update Transmission hourly with assigned open port. Please read the instructions below, and read it again before posting an issue :)
 
@@ -396,3 +398,7 @@ $ sudo systemctl stop transmission-openvpn.service
 # Later ...
 $ sudo systemctl start transmission-openvpn.service
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foakman%2Fdocker-transmission-openvpn.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Foakman%2Fdocker-transmission-openvpn?ref=badge_large)
